@@ -36,6 +36,7 @@ namespace CurrencyExchangeRates.Core.Services
             _serviceBusQueueSender = serviceBusQueueSender;
         }
 
+        /// <inheritdoc/>
         public async Task<CurrencyExchangeRateDto> CreateCurrencyExchangeRateAsync(CurrencyExchangeRateDto request, CancellationToken cancellationToken)
         {
             var newEntity = _mapper.Map<CurrencyExchangeRate>(request);
@@ -49,11 +50,13 @@ namespace CurrencyExchangeRates.Core.Services
             return dto;
         }
 
+        /// <inheritdoc/>
         public async Task<bool> DeleteCurrencyExchangeRateAsync(string currencyFrom, string currencyTo, CancellationToken cancellationToken)
         {
             return await _currencyExchangeRateRepository.DeleteCurrencyExchangeRateAsync(currencyFrom, currencyTo, cancellationToken);
         }
 
+        /// <inheritdoc/>
         public async Task<CurrencyExchangeRateDto?> GetCurrencyExchangeRateAsync(string currencyFrom, string currencyTo, CancellationToken cancellationToken)
         {
             var entity = await _currencyExchangeRateRepository.GetCurrencyExchangeRateAsync(currencyFrom, currencyTo, cancellationToken);
@@ -95,6 +98,7 @@ namespace CurrencyExchangeRates.Core.Services
             return dto;
         }
 
+        /// <inheritdoc/>
         public async Task<CurrencyExchangeRateDto?> UpdateCurrencyExchangeRateAsync(CurrencyExchangeRateDto request, CancellationToken cancellationToken)
         {
             var entity = await _currencyExchangeRateRepository.GetCurrencyExchangeRateAsync(request.FromCurrencyCode, request.ToCurrencyCode, cancellationToken);
