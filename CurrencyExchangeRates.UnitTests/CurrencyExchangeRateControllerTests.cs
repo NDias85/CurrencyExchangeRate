@@ -103,8 +103,6 @@ namespace CurrencyExchangeRates.UnitTests
             // Arrange
             var expectedResult = new CurrencyExchangeRateDto()
             {
-                FromCurrencyCode = "EUR",
-                ToCurrencyCode = "USD",
                 AskPrice = 1.23m,
                 BidPrice = 1.44m,
                 LastRefreshed = DateTime.UtcNow,
@@ -118,7 +116,7 @@ namespace CurrencyExchangeRates.UnitTests
             var controller = new CurrencyExchangeRateController(MockedCurrencyExchangeRateService.Object);
 
             // Act
-            var response = await controller.PutAsync(expectedResult, CancellationToken.None);
+            var response = await controller.PutAsync("USD", "GBP", expectedResult, CancellationToken.None);
 
             // Assert
             response.Value!.Should().BeEquivalentTo(expectedResult);
@@ -139,7 +137,7 @@ namespace CurrencyExchangeRates.UnitTests
             var controller = new CurrencyExchangeRateController(MockedCurrencyExchangeRateService.Object);
 
             // Act
-            var response = await controller.PutAsync(requestData, CancellationToken.None);
+            var response = await controller.PutAsync("", "", requestData, CancellationToken.None);
 
             // Assert
             var result = response.Result as BadRequestObjectResult;

@@ -36,7 +36,7 @@ namespace CurrencyExchangeRates.Core.Services
 
             // TODO: Send event message
 
-            return request;
+            return _mapper.Map<CurrencyExchangeRateDto>(result);
         }
 
         public async Task<bool> DeleteCurrencyExchangeRateAsync(string currencyFrom, string currencyTo, CancellationToken cancellationToken)

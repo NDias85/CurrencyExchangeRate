@@ -1,9 +1,9 @@
 using CurrencyExchangeRates.Core.Services;
 using CurrencyExchangeRates.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using FluentAssertions;
 using Moq;
-using Microsoft.AspNetCore.Http;
 
 namespace CurrencyExchangeRates.FunctionApp.UnitTests
 {
@@ -32,7 +32,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
             var response = await function.RunGet(httpRequestData, "USD", "GBP", CancellationToken.None);
 
             // Assert
-            var result = response.Result as OkObjectResult;
+            var result = response as OkObjectResult;
             result!.StatusCode.Should().Be(StatusCodes.Status200OK);
             result!.Value.Should().BeEquivalentTo(expectedResult);
         }
@@ -49,7 +49,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
             var response = await function.RunGet(httpRequestData, "USD", "GBP", CancellationToken.None);
 
             // Assert
-            var result = response.Result as NotFoundResult;
+            var result = response as NotFoundResult;
             result!.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
@@ -79,7 +79,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
             var response = await function.RunPost(httpRequestData, Mock.Of<Microsoft.Extensions.Logging.ILogger>(), CancellationToken.None);
 
             // Assert
-            var result = response.Result as OkObjectResult;
+            var result = response as OkObjectResult;
             result!.StatusCode.Should().Be(StatusCodes.Status200OK);
             result!.Value.Should().BeEquivalentTo(expectedResult);
         }
@@ -104,7 +104,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
             var response = await function.RunPost(httpRequestData, Mock.Of<Microsoft.Extensions.Logging.ILogger>(), CancellationToken.None);
 
             // Assert
-            var result = response.Result as BadRequestObjectResult;
+            var result = response as BadRequestObjectResult;
             result!.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
             result!.Value.Should().NotBeNull();
         }
@@ -132,10 +132,10 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
             var function = new CurrencyExchangeRateFunction(MockedCurrencyExchangeRateService.Object);
 
             // Act
-            var response = await function.RunPut(httpRequestData, Mock.Of<Microsoft.Extensions.Logging.ILogger>(), CancellationToken.None);
+            var response = await function.RunPut(httpRequestData, "EUR", "USD", Mock.Of<Microsoft.Extensions.Logging.ILogger>(), CancellationToken.None);
 
             // Assert
-            var result = response.Result as OkObjectResult;
+            var result = response as OkObjectResult;
             result!.StatusCode.Should().Be(StatusCodes.Status200OK);
             result!.Value.Should().BeEquivalentTo(expectedResult);
         }
@@ -157,10 +157,10 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
             var function = new CurrencyExchangeRateFunction(MockedCurrencyExchangeRateService.Object);
 
             // Act
-            var response = await function.RunPut(httpRequestData, Mock.Of<Microsoft.Extensions.Logging.ILogger>(), CancellationToken.None);
+            var response = await function.RunPut(httpRequestData, "", "", Mock.Of<Microsoft.Extensions.Logging.ILogger>(), CancellationToken.None);
 
             // Assert
-            var result = response.Result as BadRequestObjectResult;
+            var result = response as BadRequestObjectResult;
             result!.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
             result!.Value.Should().NotBeNull();
         }

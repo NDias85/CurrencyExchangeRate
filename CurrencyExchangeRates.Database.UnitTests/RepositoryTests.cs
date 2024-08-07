@@ -58,6 +58,42 @@ namespace CurrencyExchangeRates.Database.UnitTests
         }
 
         [Fact]
+        public async Task CreateCurrencyExchangeRateAsync_Failure_WhenEntityAlreadyExists()
+        {
+            // Arrange
+            var repository = new CurrencyExchangeRateRepository(_context);
+
+            var entity = new CurrencyExchangeRate
+            {
+                FromCurrencyCode = "USD",
+                ToCurrencyCode = "EUR",
+                ExchangeRate = 12.3m,
+                LastRefreshed = DateTime.UtcNow,
+                AskPrice = 1.1m,
+                BidPrice = 1.2m
+            };
+
+            await _context.CurrencyExchangeRates.AddAsync(entity);
+            await _context.SaveChangesAsync();
+
+            var newEntity = new CurrencyExchangeRate
+            {
+                FromCurrencyCode = "USD",
+                ToCurrencyCode = "EUR",
+                ExchangeRate = 43,
+                LastRefreshed = DateTime.UtcNow,
+                AskPrice = 11.1m,
+                BidPrice = 12.2m
+            };
+
+            // Act
+            var result = await repository.CreateCurrencyExchangeRateAsync(newEntity, CancellationToken.None);
+
+            // Assert
+            result.Should().BeNull();
+        }
+
+        [Fact]
         public async Task UpdateCurrencyExchangeRateAsync_Success()
         {
             // Arrange

@@ -6,7 +6,7 @@ namespace CurrencyExchangeRates.Database.Repositories
     {
         Task<CurrencyExchangeRate?> GetCurrencyExchangeRateAsync(string? currencyFrom, string? currencyTo, CancellationToken cancellationToken);
 
-        Task<CurrencyExchangeRate> CreateCurrencyExchangeRateAsync(CurrencyExchangeRate currencyExchangeRate, CancellationToken cancellationToken);
+        Task<CurrencyExchangeRate?> CreateCurrencyExchangeRateAsync(CurrencyExchangeRate currencyExchangeRate, CancellationToken cancellationToken);
 
         Task<CurrencyExchangeRate?> UpdateCurrencyExchangeRateAsync(CurrencyExchangeRate currencyExchangeRate, CancellationToken cancellationToken);
 

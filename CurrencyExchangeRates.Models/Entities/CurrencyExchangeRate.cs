@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CurrencyExchangeRates.Models.Entities
 {
@@ -13,12 +14,15 @@ namespace CurrencyExchangeRates.Models.Entities
         [Required]
         public string? ToCurrencyCode { get; set; }
 
+        [Column(TypeName = "decimal(18, 6)")]
         public decimal ExchangeRate { get; set; }
 
         public DateTime LastRefreshed { get; set; }
 
+        [Column(TypeName = "decimal(18, 6)")]
         public decimal BidPrice { get; set; }
 
+        [Column(TypeName = "decimal(18, 6)")]
         public decimal AskPrice { get; set; }
     }
 }

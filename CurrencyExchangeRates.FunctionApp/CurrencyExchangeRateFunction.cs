@@ -19,8 +19,8 @@ namespace CurrencyExchangeRates.FunctionApp
         }
 
         [Function("CurrencyExchangeRateGet")]
-        public async Task<ActionResult<CurrencyExchangeRateDto>> RunGet(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "CurrencyExchangeRate/{currencyFrom}/{currencyTo}")] 
+        public async Task<IActionResult> RunGet(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "CurrencyExchangeRateFunction/{currencyFrom}/{currencyTo}")] 
             HttpRequestData req,
             string currencyFrom,
             string currencyTo,
@@ -31,8 +31,8 @@ namespace CurrencyExchangeRates.FunctionApp
         }
 
         [Function("CurrencyExchangeRatePost")]
-        public async Task<ActionResult<CurrencyExchangeRateDto>> RunPost(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "CurrencyExchangeRate")]
+        public async Task<IActionResult> RunPost(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "CurrencyExchangeRateFunction")]
             HttpRequestData req,
             ILogger logger,
             CancellationToken cancellationToken)
@@ -45,7 +45,7 @@ namespace CurrencyExchangeRates.FunctionApp
                 var validationResults = request.GetValidationResults();
                 if (!validationResults.IsValid)
                 {
-                    return new BadRequestObjectResult(validationResults);
+                    return new BadRequestObjectResult(validationResults.Errors.Select(s => s.ErrorMessage));
                 }
 
                 var result = await _currencyExchangeRateService.CreateCurrencyExchangeRateAsync(request, cancellationToken);
@@ -59,9 +59,11 @@ namespace CurrencyExchangeRates.FunctionApp
         }
 
         [Function("CurrencyExchangeRatePut")]
-        public async Task<ActionResult<CurrencyExchangeRateDto>> RunPut(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "CurrencyExchangeRate/{currencyFrom}/{currencyTo}")]
+        public async Task<IActionResult> RunPut(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "CurrencyExchangeRateFunction/{currencyFrom}/{currencyTo}")]
             HttpRequestData req,
+            string currencyFrom,
+            string currencyTo,
             ILogger logger,
             CancellationToken cancellationToken)
         {
@@ -69,11 +71,16 @@ namespace CurrencyExchangeRates.FunctionApp
             {
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync(cancellationToken);
                 var request = JsonConvert.DeserializeObject<CurrencyExchangeRateDto>(requestBody);
+                if (request is not null)
+                {
+                    request.FromCurrencyCode = currencyFrom;
+                    request.ToCurrencyCode = currencyTo;
+                }
 
                 var validationResults = request.GetValidationResults();
                 if (!validationResults.IsValid)
                 {
-                    return new BadRequestObjectResult(validationResults);
+                    return new BadRequestObjectResult(validationResults.Errors.Select(s => s.ErrorMessage));
                 }
 
                 var result = await _currencyExchangeRateService.UpdateCurrencyExchangeRateAsync(request, cancellationToken);
@@ -88,7 +95,7 @@ namespace CurrencyExchangeRates.FunctionApp
 
         [Function("CurrencyExchangeRateDelete")]
         public async Task<StatusCodeResult> RunDelete(
-           [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "CurrencyExchangeRate/{currencyFrom}/{currencyTo}")]
+           [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "CurrencyExchangeRateFunction/{currencyFrom}/{currencyTo}")]
            HttpRequestData req,
            string currencyFrom,
            string currencyTo,

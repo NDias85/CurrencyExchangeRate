@@ -12,8 +12,11 @@ namespace CurrencyExchangeRates.Database.Repositories
             this.dbContext = dbContext;
         }
 
-        public async Task<CurrencyExchangeRate> CreateCurrencyExchangeRateAsync(CurrencyExchangeRate currencyExchangeRate, CancellationToken cancellationToken)
+        public async Task<CurrencyExchangeRate?> CreateCurrencyExchangeRateAsync(CurrencyExchangeRate currencyExchangeRate, CancellationToken cancellationToken)
         {
+            var exists = await dbContext.CurrencyExchangeRates.AnyAsync(w => w.FromCurrencyCode == currencyExchangeRate.FromCurrencyCode && w.ToCurrencyCode == currencyExchangeRate.ToCurrencyCode, cancellationToken);
+            if (exists) return null;
+
             await dbContext.AddAsync(currencyExchangeRate, cancellationToken);
             await dbContext.SaveChangesAsync(cancellationToken);
 
