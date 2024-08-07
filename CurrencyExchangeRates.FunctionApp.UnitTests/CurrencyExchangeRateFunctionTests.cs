@@ -24,7 +24,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
                 .Setup(w => w.GetCurrencyExchangeRateAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expectedResult);
 
-            var httpRequestData = MockHttpRequestData.Create();
+            var httpRequestData = MockHttpRequest.Create("");
 
             var function = new CurrencyExchangeRateFunction(MockedCurrencyExchangeRateService.Object);
 
@@ -41,7 +41,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
         public async Task CurrencyExchangeRateGet_NotFound_WhenEntityDoesntExist()
         {
             // Arrange
-            var httpRequestData = MockHttpRequestData.Create();
+            var httpRequestData = MockHttpRequest.Create("");
 
             var function = new CurrencyExchangeRateFunction(MockedCurrencyExchangeRateService.Object);
 
@@ -71,7 +71,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
                 .Setup(w => w.CreateCurrencyExchangeRateAsync(It.IsAny<CurrencyExchangeRateDto>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expectedResult);
 
-            var httpRequestData = MockHttpRequestData.Create(expectedResult);
+            var httpRequestData = MockHttpRequest.Create(expectedResult);
 
             var function = new CurrencyExchangeRateFunction(MockedCurrencyExchangeRateService.Object);
 
@@ -96,7 +96,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
                 ExchangeRate = 0.96m
             };
 
-            var httpRequestData = MockHttpRequestData.Create(requestData);
+            var httpRequestData = MockHttpRequest.Create(requestData);
 
             var function = new CurrencyExchangeRateFunction(MockedCurrencyExchangeRateService.Object);
 
@@ -127,7 +127,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
                 .Setup(w => w.UpdateCurrencyExchangeRateAsync(It.IsAny<CurrencyExchangeRateDto>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expectedResult);
 
-            var httpRequestData = MockHttpRequestData.Create(expectedResult);
+            var httpRequestData = MockHttpRequest.Create(expectedResult);
 
             var function = new CurrencyExchangeRateFunction(MockedCurrencyExchangeRateService.Object);
 
@@ -152,7 +152,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
                 ExchangeRate = 0.96m
             };
 
-            var httpRequestData = MockHttpRequestData.Create(requestData);
+            var httpRequestData = MockHttpRequest.Create(requestData);
 
             var function = new CurrencyExchangeRateFunction(MockedCurrencyExchangeRateService.Object);
 
@@ -173,7 +173,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
                 .Setup(w => w.DeleteCurrencyExchangeRateAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(true);
 
-            var httpRequestData = MockHttpRequestData.Create();
+            var httpRequestData = MockHttpRequest.Create("");
 
             var function = new CurrencyExchangeRateFunction(MockedCurrencyExchangeRateService.Object);
 
@@ -193,7 +193,7 @@ namespace CurrencyExchangeRates.FunctionApp.UnitTests
                 ExchangeRate = 0.96m
             };
 
-            var httpRequestData = MockHttpRequestData.Create();
+            var httpRequestData = MockHttpRequest.Create("");
 
             var function = new CurrencyExchangeRateFunction(MockedCurrencyExchangeRateService.Object);
 

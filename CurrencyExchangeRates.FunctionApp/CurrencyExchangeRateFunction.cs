@@ -1,11 +1,17 @@
-using Microsoft.AspNetCore.Mvc;
 using CurrencyExchangeRates.Core.Extensions;
 using CurrencyExchangeRates.Core.Services;
 using CurrencyExchangeRates.Models.DTO;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using System.IO;
 
 namespace CurrencyExchangeRates.FunctionApp
 {
@@ -18,10 +24,10 @@ namespace CurrencyExchangeRates.FunctionApp
             _currencyExchangeRateService = currencyExchangeRateService ?? throw new ArgumentNullException(nameof(currencyExchangeRateService));
         }
 
-        [Function("CurrencyExchangeRateGet")]
+        [FunctionName("CurrencyExchangeRateGet")]
         public async Task<IActionResult> RunGet(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "CurrencyExchangeRateFunction/{currencyFrom}/{currencyTo}")] 
-            HttpRequestData req,
+            HttpRequest req,
             string currencyFrom,
             string currencyTo,
             CancellationToken cancellationToken)
@@ -30,10 +36,10 @@ namespace CurrencyExchangeRates.FunctionApp
             return result == null ? new NotFoundResult() : new OkObjectResult(result);
         }
 
-        [Function("CurrencyExchangeRatePost")]
+        [FunctionName("CurrencyExchangeRatePost")]
         public async Task<IActionResult> RunPost(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "CurrencyExchangeRateFunction")]
-            HttpRequestData req,
+            HttpRequest req,
             ILogger logger,
             CancellationToken cancellationToken)
         {
@@ -58,10 +64,10 @@ namespace CurrencyExchangeRates.FunctionApp
             }
         }
 
-        [Function("CurrencyExchangeRatePut")]
+        [FunctionName("CurrencyExchangeRatePut")]
         public async Task<IActionResult> RunPut(
             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "CurrencyExchangeRateFunction/{currencyFrom}/{currencyTo}")]
-            HttpRequestData req,
+            HttpRequest req,
             string currencyFrom,
             string currencyTo,
             ILogger logger,
@@ -93,10 +99,10 @@ namespace CurrencyExchangeRates.FunctionApp
             }
         }
 
-        [Function("CurrencyExchangeRateDelete")]
+        [FunctionName("CurrencyExchangeRateDelete")]
         public async Task<StatusCodeResult> RunDelete(
            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "CurrencyExchangeRateFunction/{currencyFrom}/{currencyTo}")]
-           HttpRequestData req,
+           HttpRequest req,
            string currencyFrom,
            string currencyTo,
            CancellationToken cancellationToken)
