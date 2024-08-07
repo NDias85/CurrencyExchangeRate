@@ -1,0 +1,6 @@
+@CurrencyExchangeRates_HostAddress = http://localhost:5038
+
+GET {{CurrencyExchangeRates_HostAddress}}/CurrencyExchangeRate/USD/EUR
+Accept: application/json
+
+###

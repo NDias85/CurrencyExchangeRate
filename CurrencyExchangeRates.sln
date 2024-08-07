@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyExchangeRates.Models", "CurrencyExchangeRates.Models\CurrencyExchangeRates.Models.csproj", "{9CB53939-F8D6-4F30-B665-E881803F4833}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyExchangeRates.Core", "CurrencyExchangeRates.Core\CurrencyExchangeRates.Core.csproj", "{6A12AB1A-8585-4C66-9571-990095020E63}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyExchangeRates.Database", "CurrencyExchangeRates.Database\CurrencyExchangeRates.Database.csproj", "{B7B05D75-2330-480A-B359-B9F6ADB096CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyExchangeRates", "CurrencyExchangeRates\CurrencyExchangeRates.csproj", "{DA1A5F55-0CBC-4422-A4C3-96EC8EC333E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyExchangeRates.FunctionApp", "CurrencyExchangeRates.FunctionApp\CurrencyExchangeRates.FunctionApp.csproj", "{2329F305-4496-44DA-A613-2B588D70DF5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyExchangeRates.Database.UnitTests", "CurrencyExchangeRates.Database.UnitTests\CurrencyExchangeRates.Database.UnitTests.csproj", "{CB58DF94-9807-4DB6-8934-EC508F19D45D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyExchangeRates.Core.UnitTests", "CurrencyExchangeRates.Core.UnitTests\CurrencyExchangeRates.Core.UnitTests.csproj", "{1E4574CA-39A8-45C5-B358-A43713DCEA71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyExchangeRates.FunctionApp.UnitTests", "CurrencyExchangeRates.FunctionApp.UnitTests\CurrencyExchangeRates.FunctionApp.UnitTests.csproj", "{3D112154-A935-423C-9AE4-789AFA04F58F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyExchangeRates.UnitTests", "CurrencyExchangeRates.UnitTests\CurrencyExchangeRates.UnitTests.csproj", "{BC035BA2-4FB7-4782-A084-BF1E7E3F557B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CB53939-F8D6-4F30-B665-E881803F4833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CB53939-F8D6-4F30-B665-E881803F4833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CB53939-F8D6-4F30-B665-E881803F4833}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CB53939-F8D6-4F30-B665-E881803F4833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A12AB1A-8585-4C66-9571-990095020E63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A12AB1A-8585-4C66-9571-990095020E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A12AB1A-8585-4C66-9571-990095020E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A12AB1A-8585-4C66-9571-990095020E63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B05D75-2330-480A-B359-B9F6ADB096CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B05D75-2330-480A-B359-B9F6ADB096CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B05D75-2330-480A-B359-B9F6ADB096CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B05D75-2330-480A-B359-B9F6ADB096CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA1A5F55-0CBC-4422-A4C3-96EC8EC333E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA1A5F55-0CBC-4422-A4C3-96EC8EC333E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA1A5F55-0CBC-4422-A4C3-96EC8EC333E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA1A5F55-0CBC-4422-A4C3-96EC8EC333E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2329F305-4496-44DA-A613-2B588D70DF5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2329F305-4496-44DA-A613-2B588D70DF5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2329F305-4496-44DA-A613-2B588D70DF5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2329F305-4496-44DA-A613-2B588D70DF5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB58DF94-9807-4DB6-8934-EC508F19D45D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB58DF94-9807-4DB6-8934-EC508F19D45D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB58DF94-9807-4DB6-8934-EC508F19D45D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB58DF94-9807-4DB6-8934-EC508F19D45D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E4574CA-39A8-45C5-B358-A43713DCEA71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E4574CA-39A8-45C5-B358-A43713DCEA71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E4574CA-39A8-45C5-B358-A43713DCEA71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E4574CA-39A8-45C5-B358-A43713DCEA71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D112154-A935-423C-9AE4-789AFA04F58F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D112154-A935-423C-9AE4-789AFA04F58F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D112154-A935-423C-9AE4-789AFA04F58F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D112154-A935-423C-9AE4-789AFA04F58F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC035BA2-4FB7-4782-A084-BF1E7E3F557B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC035BA2-4FB7-4782-A084-BF1E7E3F557B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC035BA2-4FB7-4782-A084-BF1E7E3F557B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC035BA2-4FB7-4782-A084-BF1E7E3F557B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C7A0E12-4362-4774-8083-5FA6D00B26C9}
+	EndGlobalSection
+EndGlobal
