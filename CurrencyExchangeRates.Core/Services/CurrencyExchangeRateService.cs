@@ -6,6 +6,7 @@ using CurrencyExchangeRates.Models.External;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace CurrencyExchangeRates.Core.Services
 {
@@ -15,8 +16,13 @@ namespace CurrencyExchangeRates.Core.Services
         private readonly ICurrencyExchangeRateRepository _currencyExchangeRateRepository;
         private readonly IMapper _mapper;
         private readonly HttpClient _httpClient;
+        private readonly IServiceBusQueueSender _serviceBusQueueSender;
 
-        public CurrencyExchangeRateService(ILogger<CurrencyExchangeRateService> logger, ICurrencyExchangeRateRepository currencyExchangeRateRepository, IMapper mapper, HttpClient httpClient)
+        public CurrencyExchangeRateService(
+            ILogger<CurrencyExchangeRateService> logger,
+            ICurrencyExchangeRateRepository currencyExchangeRateRepository,
+            IMapper mapper, HttpClient httpClient,
+            IServiceBusQueueSender serviceBusQueueSender)
         {
             if (httpClient == null || httpClient.BaseAddress == null)
             {
@@ -27,16 +33,20 @@ namespace CurrencyExchangeRates.Core.Services
             _currencyExchangeRateRepository = currencyExchangeRateRepository ?? throw new ArgumentNullException(nameof(currencyExchangeRateRepository));
             _mapper = mapper;
             _httpClient = httpClient;
+            _serviceBusQueueSender = serviceBusQueueSender;
         }
 
         public async Task<CurrencyExchangeRateDto> CreateCurrencyExchangeRateAsync(CurrencyExchangeRateDto request, CancellationToken cancellationToken)
         {
             var newEntity = _mapper.Map<CurrencyExchangeRate>(request);
             var result = await _currencyExchangeRateRepository.CreateCurrencyExchangeRateAsync(newEntity, cancellationToken);
+                        
+            var dto = _mapper.Map<CurrencyExchangeRateDto>(result);
 
-            // TODO: Send event message
+            // Send event message
+            await _serviceBusQueueSender.SendAsync(JsonSerializer.Serialize(dto));
 
-            return _mapper.Map<CurrencyExchangeRateDto>(result);
+            return dto;
         }
 
         public async Task<bool> DeleteCurrencyExchangeRateAsync(string currencyFrom, string currencyTo, CancellationToken cancellationToken)
@@ -52,7 +62,7 @@ namespace CurrencyExchangeRates.Core.Services
                 return _mapper.Map<CurrencyExchangeRateDto>(entity);
             }
 
-            // TODO: Integration with https://www.alphavantage.co/documentation/#currency-exchange
+            // Get the result from the third party API (AlphaVantage)
 
             var url = _httpClient.BaseAddress!.AbsoluteUri;
             url = QueryHelpers.AddQueryString(url, "function", "CURRENCY_EXCHANGE_RATE");
@@ -76,10 +86,13 @@ namespace CurrencyExchangeRates.Core.Services
 
             var newEntity = _mapper.Map<CurrencyExchangeRate>(response.RealTimeCurrencyExchangeRate);
             newEntity = await _currencyExchangeRateRepository.CreateCurrencyExchangeRateAsync(newEntity, cancellationToken);
+            
+            var dto = _mapper.Map<CurrencyExchangeRateDto>(newEntity);
 
-            // TODO: Send event message
+            // Send event message
+            await _serviceBusQueueSender.SendAsync(JsonSerializer.Serialize(dto));
 
-            return _mapper.Map<CurrencyExchangeRateDto>(newEntity);
+            return dto;
         }
 
         public async Task<CurrencyExchangeRateDto?> UpdateCurrencyExchangeRateAsync(CurrencyExchangeRateDto request, CancellationToken cancellationToken)

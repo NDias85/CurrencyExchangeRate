@@ -29,7 +29,7 @@ namespace CurrencyExchangeRates.Core.UnitTests
                 .Setup(w => w.GetCurrencyExchangeRateAsync(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(currencyExchangeRate);
 
-            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient);
+            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient, Mock.Of<IServiceBusQueueSender>());
 
             // Act
             var result = await service.GetCurrencyExchangeRateAsync("USD", "EUR", CancellationToken.None);
@@ -53,7 +53,7 @@ namespace CurrencyExchangeRates.Core.UnitTests
                 .Setup(w => w.CreateCurrencyExchangeRateAsync(It.IsAny<CurrencyExchangeRate>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(entity);
 
-            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient);
+            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient, Mock.Of<IServiceBusQueueSender>());
 
             // Act
             var result = await service.GetCurrencyExchangeRateAsync("USD", "EUR", CancellationToken.None);
@@ -81,14 +81,14 @@ namespace CurrencyExchangeRates.Core.UnitTests
                 .Setup(w => w.CreateCurrencyExchangeRateAsync(It.IsAny<CurrencyExchangeRate>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(entity);
 
-            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient);
+            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient, Mock.Of<IServiceBusQueueSender>());
 
             var dto = new CurrencyExchangeRateDto
             {
                 FromCurrencyCode = "USD",
                 ToCurrencyCode = "EUR",
                 ExchangeRate = 12.3m,
-                LastRefreshed = DateTime.UtcNow,
+                LastRefreshed = entity.LastRefreshed,
                 AskPrice = 1.1m,
                 BidPrice = 1.2m
             };
@@ -135,7 +135,7 @@ namespace CurrencyExchangeRates.Core.UnitTests
                 .Setup(w => w.UpdateCurrencyExchangeRateAsync(It.IsAny<CurrencyExchangeRate>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(updatedEntity);
 
-            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient);
+            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient, Mock.Of<IServiceBusQueueSender>());
 
             var dto = new CurrencyExchangeRateDto
             {
@@ -163,7 +163,7 @@ namespace CurrencyExchangeRates.Core.UnitTests
                 .Setup(w => w.UpdateCurrencyExchangeRateAsync(It.IsAny<CurrencyExchangeRate>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(null as CurrencyExchangeRate);
 
-            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient);
+            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient, Mock.Of<IServiceBusQueueSender>());
 
             var dto = new CurrencyExchangeRateDto
             {
@@ -189,7 +189,7 @@ namespace CurrencyExchangeRates.Core.UnitTests
                 .Setup(w => w.DeleteCurrencyExchangeRateAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(true);
 
-            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient);
+            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient, Mock.Of<IServiceBusQueueSender>());
 
             // Act
             var result = await service.DeleteCurrencyExchangeRateAsync("USD", "EUR", CancellationToken.None);
@@ -205,7 +205,7 @@ namespace CurrencyExchangeRates.Core.UnitTests
                 .Setup(w => w.DeleteCurrencyExchangeRateAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(false);
 
-            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient);
+            var service = new CurrencyExchangeRateService(Mock.Of<ILogger<CurrencyExchangeRateService>>(), MockedCurrencyExchangeRateRepository.Object, Mapper, HttpClient, Mock.Of<IServiceBusQueueSender>());
 
             // Act
             var result = await service.DeleteCurrencyExchangeRateAsync("USD", "EUR", CancellationToken.None);

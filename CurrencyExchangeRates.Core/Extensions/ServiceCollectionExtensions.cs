@@ -3,6 +3,7 @@ using CurrencyExchangeRates.Core.Services;
 using CurrencyExchangeRates.Core.Validators;
 using CurrencyExchangeRates.Database;
 using CurrencyExchangeRates.Database.Repositories;
+using CurrencyExchangeRates.Models.Settings;
 using FluentValidation;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +40,14 @@ namespace CurrencyExchangeRates.Core.Extensions
             var alphaVantageUrl = configuration["AlphaVantage:Url"] ?? throw new NullReferenceException("Missing configuration parameter for AlphaVantage:Url");
             var alphaVantageApiKey = configuration["AlphaVantage:ApiKey"] ?? throw new NullReferenceException("Missing configuration parameter for AlphaVantage:ApiKey");
 
+            var serviceBusQueueName = configuration["ServiceBus:QueueName"] ?? throw new NullReferenceException("Missing configuration parameter for ServiceBus:QueueName");
+            var serviceBusConnectionString = configuration["ServiceBus:ConnectionString"] ?? throw new NullReferenceException("Missing configuration parameter for ServiceBus:ConnectionString");
+
             alphaVantageUrl = QueryHelpers.AddQueryString(alphaVantageUrl, "apikey", alphaVantageApiKey);
+
+            var serviceBusQueueSettings = new ServiceBusQueueSettings { ConnectionString = serviceBusConnectionString, QueueName = serviceBusQueueName };
+            services.AddSingleton(serviceBusQueueSettings);
+            services.AddTransient<IServiceBusQueueSender, ServiceBusQueueSender>();
 
             services.AddTransient<ICurrencyExchangeRateRepository, CurrencyExchangeRateRepository>();
             services.AddTransient<ICurrencyExchangeRateService, CurrencyExchangeRateService>();
