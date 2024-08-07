@@ -9,7 +9,7 @@ var host = new HostBuilder()
     .ConfigureFunctionsWebApplication()
     .ConfigureAppConfiguration((app, builder) =>
     {
-        builder.AddUserSecrets(Assembly.GetExecutingAssembly(), false);
+        builder.AddUserSecrets(Assembly.GetExecutingAssembly(), true);
     })
     .ConfigureServices(services => {
         var configuration = services.BuildServiceProvider().GetService<IConfiguration>();
