@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using System.Reflection;
 
 var host = new HostBuilder()
-    .ConfigureFunctionsWebApplication()
     .ConfigureAppConfiguration((app, builder) =>
     {
         builder.AddUserSecrets(Assembly.GetExecutingAssembly(), true);
@@ -19,6 +18,7 @@ var host = new HostBuilder()
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
     })
+    .ConfigureFunctionsWebApplication()
     .Build();
 
 host.Run();
