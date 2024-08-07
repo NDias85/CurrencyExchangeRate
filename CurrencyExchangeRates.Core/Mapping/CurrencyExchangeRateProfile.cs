@@ -15,7 +15,7 @@ namespace CurrencyExchangeRates.Core.Mapping
 
             CreateMap<RealTimeCurrencyExchangeRate, CurrencyExchangeRate>()
                 .ForMember(dest => dest.Id, options => options.Ignore())
-                .ForMember(dest => dest.LastRefreshed, options => options.MapFrom(m => DateTime.Parse(m.LastRefreshed)));
+                .ForMember(dest => dest.LastRefreshed, options => options.MapFrom(m => string.IsNullOrEmpty(m.LastRefreshed) ? DateTime.MinValue : DateTime.Parse(m.LastRefreshed)));
         }
     }
 }

@@ -54,7 +54,7 @@ namespace CurrencyExchangeRates.Database.UnitTests
             // Assert
             result.Should().NotBeNull();
             result.Should().BeEquivalentTo(entity, options => options.Excluding(w => w.Id));
-            result.Should().BeEquivalentTo(await _context.CurrencyExchangeRates.FindAsync(result.Id));
+            result.Should().BeEquivalentTo(await _context.CurrencyExchangeRates.FindAsync(result!.Id));
         }
 
         [Fact]

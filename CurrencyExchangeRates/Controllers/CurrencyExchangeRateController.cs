@@ -59,7 +59,7 @@ namespace CurrencyExchangeRates.Controllers
                 return new BadRequestObjectResult(validationResults.Errors.Select(s => s.ErrorMessage));
             }
 
-            var result = await _currencyExchangeRateService.UpdateCurrencyExchangeRateAsync(request, cancellationToken);
+            var result = await _currencyExchangeRateService.UpdateCurrencyExchangeRateAsync(request!, cancellationToken);
             return result == null ? NotFound() : result;
         }
 
