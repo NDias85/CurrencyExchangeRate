@@ -4,10 +4,24 @@ Simple CRUD API to manage the exchange rate of a pair of currencies (eg. USD to 
 When a new exchange rate is created either directly by POST or when retrieved by the alpha vantage service a message with the item details is sent to an Azure Service Bus queue.
 
 ### Important note
-Since this is a personal project setup with my personal Azure account with Azure Web Apps and Service Bus it won't be available locally.
+Since this is a personal project setup with my personal Azure account with Azure Web Apps and Service Bus it won't be available locally unless on request.
 The published API is available for public consumption however.
 
 ## Usage
+
+### Locally
+
+To run locally go to Manage User secrets on the API project and paste them in the opened file (secrets.json)
+![image](https://github.com/user-attachments/assets/3a7a01e9-5954-40ed-a3cf-729dc234368e)
+
+Either run the function app or the API.
+
+Example of function app running:
+![image](https://github.com/user-attachments/assets/42988065-1d21-488b-89b2-e3aef2d79cff)
+
+Once running you can call the endpoints shown on screen, similarly to the public available ones below.
+
+### Deployed app
 
 There are 4 endpoints publicly available:
 
