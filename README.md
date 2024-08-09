@@ -76,3 +76,4 @@ There are 4 endpoints publicly available:
 10. CQRS with MediatR could improve on responsibility separation in case the API grows in scope.
 11. Integration with Sonarqube or similar for code quality and security.
 12. Consider using containers with Docker + Azure container apps for easier deployment and scalability.
+13. Use Azure KeyVault for better secret management and key rotation
